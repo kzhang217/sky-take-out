@@ -83,6 +83,13 @@ public class OrderController {
         return Result.success();
     }
 
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("客户催单")
+    public Result remain(@PathVariable String id) {
+        log.info("客户催单: {}",id);
+        orderService.remain(id);
+        return Result.success();
 
+    }
 
 }

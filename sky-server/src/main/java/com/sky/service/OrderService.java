@@ -48,4 +48,6 @@ public interface OrderService {
     void complete(Long id);
 
     PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    void remain(String id);
 }

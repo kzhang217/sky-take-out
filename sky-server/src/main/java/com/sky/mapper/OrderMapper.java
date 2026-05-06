@@ -8,6 +8,10 @@ import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper
 public interface OrderMapper {
@@ -36,4 +40,14 @@ public interface OrderMapper {
 
     @Select("select count(id) from orders where status = #{status}")
     Integer countStatus(Integer status);
+
+    @Select("select * from orders where status =#{status} and order_time <#{orderTime}")
+    List<Orders> getByStatusAndTimeLT(Integer status, LocalDateTime orderTime);
+
+    @Update("update orders\n" +
+            "set status = 6,\n" +
+            "cancel_reason = '订单超时'\n" +
+            "where status = #{status}\n" +
+            "  and order_time < #{orderTime}")
+    void updataByStatusAndTimeLT(Integer status, LocalDateTime orderTime);
 }
